@@ -22,13 +22,18 @@
 
 void main()
 {
-int option, maxValue, guess, input;
+   int option, maxValue, guess, input;
    char str[5];
    time_t t;
-   maxValue = 10;
+   FILE *fp;
+
+   fp = fopen("maxValue.txt", "r");
+   fscanf(fp, "%d", &maxValue);
+   fclose(fp);
 
    menu:
    printf("\nMAIN MENU\nPress 1 to play a game\nPress 2 to change the max number\nPress 3 to quit\n");
+   printf("Enter: ");
    scanf("%d", &option);
 
    srand((unsigned)time(&t));
@@ -63,13 +68,17 @@ int option, maxValue, guess, input;
    }
    else if(option == 2)
    {
-      printf("\nMax Number that can be Entered is %d\n", maxValue);
+      printf("\nCurrent Max Number: %d", maxValue);
+      printf("\nMax Number that can be Entered is 10\n");
       printf("Enter a Max Number: ");
       scanf("%d", &input);
 
-      if(input > maxValue || input < 0)
-         printf("Value cannot be negative or over %d. Game Ending.", maxValue);
+      if(input > 10 || input < 0)
+         printf("Value cannot be negative or over 10. Game Ending.");
       else
+         fp = fopen("maxValue.txt", "w+");
+         fprintf(fp, "%d", input);
+         fclose(fp);
          maxValue = input;
       goto menu;
    }
