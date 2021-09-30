@@ -22,5 +22,59 @@
 
 void main()
 {
+int option, maxValue, guess, input;
+   char str[5];
+   time_t t;
+   maxValue = 10;
 
+   menu:
+   printf("\nMAIN MENU\nPress 1 to play a game\nPress 2 to change the max number\nPress 3 to quit\n");
+   scanf("%d", &option);
+
+   srand((unsigned)time(&t));
+
+   guess = (rand() % maxValue + 1);
+
+   if(option == 1)
+   {
+      guesses:
+      printf("\nEnter Your Guess: ");
+      scanf("%s", str);
+
+      if(str[0] == 'q')
+         goto menu;
+
+      input = atoi(str);
+      if(input == guess)
+      {
+         printf("\nCongratulations - You Won! Going back to main menu...\n");
+         goto menu;
+      }
+      else if(input > guess)
+      {
+         printf("\nYour Guess was too High. Try Again.");
+         goto guesses;
+      }
+      else if(input < guess)
+      {
+         printf("\nYour Guess was too Low. Try Again.");
+         goto guesses;
+      }
+   }
+   else if(option == 2)
+   {
+      printf("\nMax Number that can be Entered is %d\n", maxValue);
+      printf("Enter a Max Number: ");
+      scanf("%d", &input);
+
+      if(input > maxValue || input < 0)
+         printf("Value cannot be negative or over %d. Game Ending.", maxValue);
+      else
+         maxValue = input;
+      goto menu;
+   }
+   else if(option = 3)
+   {
+      printf("\nGame Over. Thanks for Playing!");
+   }
 }
